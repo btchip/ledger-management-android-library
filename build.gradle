@@ -1,0 +1,52 @@
+buildscript {
+  repositories {
+    google()
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.3.2'
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+  }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion 28
+
+  defaultConfig {
+    minSdkVersion 19
+    targetSdkVersion 28
+    versionCode 1
+    versionName "1.0"
+  }
+
+  buildTypes {
+    realase {
+      minifyEnabled false
+    }
+  }
+}
+
+dependencies {
+   api 'com.squareup.moshi:moshi:1.8.0'
+   api 'com.squareup.moshi:moshi-adapters:1.8.0'
+   api 'com.squareup.retrofit2:retrofit:2.6.0'
+   api 'com.squareup.retrofit2:converter-moshi:2.6.0'
+   implementation project(':ledger-android-library')
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
